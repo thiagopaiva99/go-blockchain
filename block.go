@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"crypto/sha256"
 	"strconv"
+	"time"
 )
 
 // Block keeps block headers
@@ -21,4 +22,11 @@ func (b *Block) SetHash() {
 	hash := sha256.Sum256(headers)
 
 	b.Hash = hash[:]
+}
+
+// NewBlock creates and returns Block
+func NewBlock(data string, prevBlockHash []byte) *Block {
+	block := &Block{time.Now().Unix(), []byte(data), prevBlockHash, []byte{}}
+	block.SetHash()
+	return block
 }
